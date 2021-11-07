@@ -31,6 +31,13 @@ public class ProgressDb {
 
     public static Cursor getBestStudByFaculty(SQLiteDatabase db, int facultyId, String startDate, String endDate) {
 
+        db.execSQL("create index if not exists idx_GroupTbl_Fac on " + GROUP_TABLE + "("
+                + "IDFACULTY)");
+
+        db.execSQL("create index if not exists idx_ProgressTbl_ExamDate on " + PROGRESS_TABLE + "("
+                    + "EXAMDATE)");
+
+
         String createView =
                 "create temp view if not exists BESTSTUD_view"
                  + " as select " + STUDENT_TABLE + ".NAME," + " avg(" + PROGRESS_TABLE + ".MARK)"
@@ -54,6 +61,13 @@ public class ProgressDb {
 
     public static Cursor getUnderperfStudByFaculty(SQLiteDatabase db, int facultyId, String startDate, String endDate) {
 
+        db.execSQL("create index if not exists idx_GroupTbl_Fac on " + GROUP_TABLE + "("
+                + "IDFACULTY)");
+
+        db.execSQL("create index if not exists idx_UnderperfStud on " + PROGRESS_TABLE + "("
+                + "EXAMDATE) where MARK < 4");
+
+
         String createView =
                 "create temp view if not exists UNDERPERFSTUD_view"
                  + " as select "
@@ -66,11 +80,11 @@ public class ProgressDb {
                 + " from " + PROGRESS_TABLE
                     + " join " + STUDENT_TABLE + " on " + STUDENT_TABLE + ".IDSTUDENT = " + PROGRESS_TABLE + ".IDSTUDENT"
                     + " join " + GROUP_TABLE + " on " + GROUP_TABLE + ".IDGROUP = " + STUDENT_TABLE + ".IDGROUP"
-                    + " where " + GROUP_TABLE + ".IDFACULTY = " + facultyId
-                        + " and EXAMDATE between date('" + startDate + "') and date('" + endDate + "')"
-                        + " and countMarks >= 1"
+                + " where " + GROUP_TABLE + ".IDFACULTY = " + facultyId
+                    + " and EXAMDATE between date('" + startDate + "') and date('" + endDate + "')"
+                    + " and countMarks >= 1"
                 + " group by " + PROGRESS_TABLE + ".IDSTUDENT"
-                + " order by COUNTMARKS desc";
+                + " order by countMarks desc";
 
         db.execSQL(createView);
 
@@ -78,6 +92,10 @@ public class ProgressDb {
     }
 
     public static Cursor getComparByFaculty(SQLiteDatabase db, String startDate, String endDate) {
+
+        db.execSQL("create index if not exists idx_ProgressTbl_ExamDate on " + PROGRESS_TABLE + "("
+                + "EXAMDATE)");
+
 
         String createView =
                 "create temp view if not exists COMPARFAC_view"
@@ -103,6 +121,10 @@ public class ProgressDb {
 
     public static Cursor getComparByGroups(SQLiteDatabase db, String startDate, String endDate) {
 
+        db.execSQL("create index if not exists idx_ProgressTbl_ExamDate on " + PROGRESS_TABLE + "("
+                + "EXAMDATE)");
+
+
         String createView =
                 "create temp view if not exists COMPARGR_view"
                  + " as select "
@@ -126,13 +148,17 @@ public class ProgressDb {
 
     public static Cursor getAvgMarkByGroup(SQLiteDatabase db, String startDate, String endDate) {
 
+        db.execSQL("create index if not exists idx_ProgressTbl_ExamDate on " + PROGRESS_TABLE + "("
+                + "EXAMDATE)");
+
+
         String createView =
                 "create temp view if not exists AVGMARKGR_view"
                  + " as select " + GROUP_TABLE + ".NAME, " + GROUP_TABLE + ".COURSE, avg(" + PROGRESS_TABLE + ".MARK)"
                  + " from " + PROGRESS_TABLE
                      + " join " + STUDENT_TABLE + " on " + STUDENT_TABLE + ".IDSTUDENT = " + PROGRESS_TABLE + ".IDSTUDENT"
                      + " join " + GROUP_TABLE + " on " + GROUP_TABLE + ".IDGROUP = " + STUDENT_TABLE + ".IDGROUP"
-                     + " where EXAMDATE between date('" + startDate + "') and date('" + endDate + "')"
+                 + " where EXAMDATE between date('" + startDate + "') and date('" + endDate + "')"
                  + " group by " + GROUP_TABLE + ".IDGROUP"
                  + " order by avg(" + PROGRESS_TABLE + ".MARK) desc";
 
@@ -143,19 +169,30 @@ public class ProgressDb {
 
     public static Cursor getAvgMarkByStudents(SQLiteDatabase db, int groupId, String startDate, String endDate) {
 
+        db.execSQL("create index if not exists idx_GroupTbl_Fac on " + STUDENT_TABLE + "("
+                + "IDGROUP)");
+
+        db.execSQL("create index if not exists idx_ProgressTbl_ExamDate on " + PROGRESS_TABLE + "("
+                + "EXAMDATE)");
+
+
         String createView =
                 "create temp view if not exists AVGMARKSTUD_view"
-                + " as select "
-                    + STUDENT_TABLE + ".NAME as NAME,"
-                    + " avg(" + PROGRESS_TABLE + ".MARK) as AVGMARK"
-                + " from " + PROGRESS_TABLE
-                    + " join " + STUDENT_TABLE + " on " + STUDENT_TABLE + ".IDSTUDENT = " + PROGRESS_TABLE + ".IDSTUDENT"
-                + " where EXAMDATE between date('" + startDate + "') and date('" + endDate + "')"
-                    + " and " + STUDENT_TABLE + ".IDGROUP = " + groupId
-                + " group by " + STUDENT_TABLE + ".IDSTUDENT";
+                 + " as select "
+                     + STUDENT_TABLE + ".NAME as NAME,"
+                     + " avg(" + PROGRESS_TABLE + ".MARK) as AVGMARK"
+                 + " from " + PROGRESS_TABLE
+                     + " join " + STUDENT_TABLE + " on " + STUDENT_TABLE + ".IDSTUDENT = " + PROGRESS_TABLE + ".IDSTUDENT"
+                 + " where EXAMDATE between date('" + startDate + "') and date('" + endDate + "')"
+                     + " and " + STUDENT_TABLE + ".IDGROUP = " + groupId
+                 + " group by " + STUDENT_TABLE + ".IDSTUDENT";
 
         db.execSQL(createView);
 
         return db.rawQuery("select * from AVGMARKSTUD_view", null);
+    }
+
+    public static void getCompareByGroups2(SQLiteDatabase db, String startDate, String endDate) {
+
     }
 }

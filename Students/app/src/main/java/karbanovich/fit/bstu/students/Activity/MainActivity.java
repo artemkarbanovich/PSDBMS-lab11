@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import karbanovich.fit.bstu.students.Activity.AddActivities.AddActivity;
+import karbanovich.fit.bstu.students.Activity.ShowActivities.ShowActivity;
 import karbanovich.fit.bstu.students.R;
 
 public class MainActivity extends AppCompatActivity {

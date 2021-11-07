@@ -1,4 +1,4 @@
-package karbanovich.fit.bstu.students.Activity;
+package karbanovich.fit.bstu.students.Activity.ShowActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import karbanovich.fit.bstu.students.Activity.ShowActivities.ShowActivity;
 import karbanovich.fit.bstu.students.R;
 
 public class ShowData extends AppCompatActivity {

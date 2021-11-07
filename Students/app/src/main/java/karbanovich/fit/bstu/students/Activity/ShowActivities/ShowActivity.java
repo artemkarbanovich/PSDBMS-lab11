@@ -1,16 +1,14 @@
-package karbanovich.fit.bstu.students.Activity;
+package karbanovich.fit.bstu.students.Activity.ShowActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,16 +16,12 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import karbanovich.fit.bstu.students.Activity.MainActivity;
 import karbanovich.fit.bstu.students.Database.DbHelper;
-import karbanovich.fit.bstu.students.Database.FacultyDb;
-import karbanovich.fit.bstu.students.Database.GroupDb;
 import karbanovich.fit.bstu.students.Database.ProgressDb;
 import karbanovich.fit.bstu.students.Helper.DateTimeHelper;
 import karbanovich.fit.bstu.students.Helper.SpinnerSetter;
@@ -52,6 +46,7 @@ public class ShowActivity extends AppCompatActivity {
     private Button showUnderperfStud;
     private Button showComparByGroups;
     private Button showComparByFac;
+    private Button showComparByGroups2;
 
     private SQLiteDatabase db;
     private List<Faculty> listFaculties;
@@ -91,6 +86,7 @@ public class ShowActivity extends AppCompatActivity {
         showUnderperfStud = findViewById(R.id.btnShowUnderperfStud);
         showComparByGroups = findViewById(R.id.btnShowComparByGroups);
         showComparByFac = findViewById(R.id.btnShowComparByFac);
+        showComparByGroups2 = findViewById(R.id.btnShowComparByGroups2);
 
         db = new DbHelper(getApplicationContext()).getReadableDatabase();
 
@@ -291,6 +287,10 @@ public class ShowActivity extends AppCompatActivity {
 
             intent.putExtra("strData", strData);
             startActivity(intent);
+        });
+
+        showComparByGroups2.setOnClickListener(view -> {
+
         });
     }
 

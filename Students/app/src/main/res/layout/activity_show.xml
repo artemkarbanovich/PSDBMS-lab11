@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.ShowActivity"
+    tools:context=".Activity.ShowActivities.ShowActivity"
     android:layout_margin="10dp">
 
     <TextView android:id="@+id/txtFaculty"
@@ -154,6 +154,15 @@
         android:text="Сравнение по факультетам"
         android:layout_marginTop="5dp"
         app:layout_constraintTop_toBottomOf="@id/btnShowComparByGroups"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button android:id="@+id/btnShowComparByGroups2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Сравнительный анализ по группам 2"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnShowComparByFac"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 

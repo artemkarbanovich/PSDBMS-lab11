@@ -23,6 +23,10 @@ public class StudentDb {
     }
 
     public static Cursor getStudentsByGroupId(SQLiteDatabase db, int groupId) {
+
+        db.execSQL("create index if not exists idx_StudTbl_IDGROUP on " + STUDENT_TABLE + "("
+                + "IDGROUP)");
+
         return db.rawQuery("select * from " + STUDENT_TABLE + " where IDGROUP = " + groupId + ";", null);
     }
 }

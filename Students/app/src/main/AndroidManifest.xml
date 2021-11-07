@@ -10,11 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Students">
         <activity
-            android:name=".Activity.ShowData"
+            android:name=".Activity.ShowActivities.ShowComparByGroups2"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Activity.ShowActivities.ShowData"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.ShowActivity"
+            android:name=".Activity.ShowActivities.ShowActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
