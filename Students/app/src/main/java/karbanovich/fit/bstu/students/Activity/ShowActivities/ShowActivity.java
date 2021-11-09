@@ -290,7 +290,7 @@ public class ShowActivity extends AppCompatActivity {
         });
 
         showComparByGroups2.setOnClickListener(view -> {
-
+            //TODO: table output "compare by groups"
         });
     }
 

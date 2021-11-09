@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import karbanovich.fit.bstu.students.Database.DbHelper;
@@ -96,7 +97,10 @@ public class SpinnerSetter {
             Student student = new Student();
 
             student.setId(cursor.getInt(cursor.getColumnIndexOrThrow("IDSTUDENT")));
+            student.setGroupId(cursor.getInt(cursor.getColumnIndexOrThrow("IDGROUP")));
             student.setName(cursor.getString(cursor.getColumnIndexOrThrow("NAME")));
+            student.setBirthday(LocalDate.parse(cursor.getString(cursor.getColumnIndexOrThrow("BIRTHDAY"))));
+            student.setAddress(cursor.getString(cursor.getColumnIndexOrThrow("ADDRESS")));
 
             listStudentsByGroup.add(i, student);
             strStudentsByGroup[i++] = student.getId() + " " + student.getName();

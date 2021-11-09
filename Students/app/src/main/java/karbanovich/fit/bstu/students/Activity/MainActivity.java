@@ -13,6 +13,7 @@ import karbanovich.fit.bstu.students.R;
 public class MainActivity extends AppCompatActivity {
 
     private Button addActivity;
+    private Button editActivity;
     private Button showActivity;
 
 
@@ -27,12 +28,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void binding() {
         addActivity = findViewById(R.id.btnAddActivity);
+        editActivity = findViewById(R.id.btnEditActivity);
         showActivity = findViewById(R.id.btnShowActivity);
     }
 
     private void setListeners() {
         addActivity.setOnClickListener(view ->
                 startActivity(new Intent(this, AddActivity.class)));
+        editActivity.setOnClickListener(view ->
+                startActivity(new Intent(this, StudentsActivity.class)));
         showActivity.setOnClickListener(view ->
                 startActivity(new Intent(this, ShowActivity.class)));
     }

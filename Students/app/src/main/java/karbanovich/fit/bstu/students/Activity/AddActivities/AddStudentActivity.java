@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.InputType;
@@ -122,6 +123,8 @@ public class AddStudentActivity extends AppCompatActivity {
                     Toast.makeText(this, "Студент успешно добавлен", Toast.LENGTH_SHORT).show();
                     clearFields();
                 } else Toast.makeText(this, "Ошибка добавления", Toast.LENGTH_SHORT).show();
+            } catch (SQLiteConstraintException e) {
+                Toast.makeText(this, "Много студентов", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(this, "Проверьте введенные данные", Toast.LENGTH_SHORT).show();
             }

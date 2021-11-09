@@ -1,8 +1,9 @@
 package karbanovich.fit.bstu.students.Model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Student {
+public class Student implements Serializable {
 
     private int id;
     private int groupId;
