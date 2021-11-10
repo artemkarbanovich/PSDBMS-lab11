@@ -63,6 +63,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:authorities="com.karbanovich.students.authority"
+            android:name="karbanovich.fit.bstu.students.ContentProvider.GroupProvider"
+            android:exported="true"
+            android:grantUriPermissions="true" />
     </application>
 
 </manifest>

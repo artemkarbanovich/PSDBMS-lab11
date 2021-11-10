@@ -14,10 +14,17 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String SUBJECT_TABLE = "SUBJECT";
     private static final String PROGRESS_TABLE = "PROGRESS";
 
+    private static DbHelper instance = null;
+
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA);
     }
 
+
+    public static DbHelper getInstance(Context context) {
+        if(instance == null) instance = new DbHelper(context);
+        return instance;
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -30,19 +37,20 @@ public class DbHelper extends SQLiteOpenHelper {
         );
         db.execSQL("create table " + GROUP_TABLE + " (                                     "
                     + "IDGROUP integer primary key autoincrement not null,                 "
-                    + "IDFACULTY integer not null,                                         "
+                    + "IDFACULTY integer,                                                  "
                     + "COURSE integer check (COURSE > 0 and COURSE < 7),                   "
                     + "NAME text not null,                                                 "
                     + "HEAD text,                                                          "
                     + "foreign key(IDFACULTY) references " + FACULTY_TABLE + "(IDFACULTY));"
         );
-        db.execSQL("create table " + STUDENT_TABLE + " (                             "
-                    + "IDSTUDENT integer primary key autoincrement not null,         "
-                    + "IDGROUP integer not null,                                     "
-                    + "NAME text not null,                                           "
-                    + "BIRTHDAY text not null,                                       "  //format: yyyy-MM-dd
-                    + "ADDRESS text not null,                                        "
-                    + "foreign key(IDGROUP) references " + GROUP_TABLE + "(IDGROUP));"
+        db.execSQL("create table " + STUDENT_TABLE + " (                           "
+                    + "IDSTUDENT integer primary key autoincrement not null,       "
+                    + "IDGROUP integer not null,                                   "
+                    + "NAME text not null,                                         "
+                    + "BIRTHDAY text not null,                                     "  //format: yyyy-MM-dd
+                    + "ADDRESS text not null,                                      "
+                    + "foreign key(IDGROUP) references " + GROUP_TABLE + "(IDGROUP)"
+                       + " on delete cascade on update cascade                   );"
         );
         db.execSQL("create table " + SUBJECT_TABLE + " (                    "
                     + "IDSUBJECT integer primary key autoincrement not null,"
@@ -54,7 +62,8 @@ public class DbHelper extends SQLiteOpenHelper {
                     + "EXAMDATE text not null,                                             "    //format: yyyy-MM-dd
                     + "MARK integer not null,                                              "
                     + "TEACHER text not null,                                              "
-                    + "foreign key(IDSTUDENT) references " + STUDENT_TABLE + "(IDSTUDENT), "
+                    + "foreign key(IDSTUDENT) references " + STUDENT_TABLE + "(IDSTUDENT)  "
+                       + " on delete cascade on update cascade,                            "
                     + "foreign key(IDSUBJECT) references " + SUBJECT_TABLE + "(IDSUBJECT));"
         );
     }
